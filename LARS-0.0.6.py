@@ -12,7 +12,6 @@
 import matplotlib.pyplot as plt
 
 from Propagador_Orbital import propagador_orbital
-from Calor_Incidente import calor_incidente
 from Periodo_Orbital import periodo_orbital
 from datetime import datetime
 import numpy as np
@@ -65,27 +64,15 @@ largura = float(df.iloc[23, 0])  # comprimento do sat
 comprimento = float(df.iloc[24, 0])  # largura do sat
 altura = float(df.iloc[25, 0])  # altura do sat
 
-# Intensidade radiante do sol e terra e valores de emissividade
-
-Is = float(df.iloc[27, 0])    # radiacao solar
-Ir = float(df.iloc[28, 0])    # radiacao IR Terra
-e = float(df.iloc[29, 0])     # emissividade Terra
-ai = float(df.iloc[30, 0])    # absortividade do satelite
-gama = float(df.iloc[31, 0])  # refletividade da Terra
-
 Propagacao_orbital = propagador_orbital(data, SMA, ecc, Raan, arg_per, true_anomaly, inc, num_orbita, delt, psi0, teta0,
                                         phi0, PSIP, TETAP, PHIP, massa, largura, comprimento, altura)
 
 
-calor_total = calor_incidente(Propagacao_orbital, Is, Ir, e, ai, gama, num_orbita)
 size = SMA*1.1
-#plot_animacao = Plots.plot_animacao_orbita(Propagacao_orbital, size, num_orbita)
-plot_groundtrack3d = Plots.plot_groundtrack_3D(Propagacao_orbital)
+
+#plot_groundtrack3d = Plots.plot_groundtrack_3D(Propagacao_orbital)
 plot_groundtrack2d = Plots.plot_groundtrack_2D(Propagacao_orbital)
-plot_calor_sol = Plots.calor_solar(calor_total)
-plot_calor_Terra = Plots.calor_IR_Terra(calor_total)
-plot_calor_albedo = Plots.calor_albedo(calor_total)
-plot_calor_total = Plots.calor_total(calor_total)
+
 
 
 import os
