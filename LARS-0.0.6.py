@@ -3,13 +3,16 @@
     Laboratory of Applications and Research in Space - LARS
     Orbital Mechanics Division
 
-    Título do Algoritmo = Codigo principal de propagacao orbital e analise termica
-    Autor= Rodrigo S. Cardozo
+    Título do Algoritmo = Codigo principal de propagacao orbital
+    Autor= Rodrigo S. Cardozo e Guilherme P. Gomes
     Versão= 0.0.1
-    Data= 24/10/2022
+    Data= 21/02/23
 
 """
 import matplotlib.pyplot as plt
+
+import ephem
+import math
 
 from Propagador_Orbital import propagador_orbital
 from Periodo_Orbital import periodo_orbital
@@ -56,7 +59,7 @@ psi0 = float(df.iloc[14, 0])
 teta0 = float(df.iloc[15, 0])
 phi0 = float(df.iloc[16, 0])
 input_string = df.iloc[18, 0]
-data = datetime.strptime(input_string, " %m/%d/%Y %H:%M:%S")
+data = datetime.strptime(input_string, " %Y/%m/%d %H:%M:%S")
 delt = float(df.iloc[19, 0])
 n = int(df.iloc[20, 0])
 massa = float(df.iloc[22, 0])  # massa do cubesat
@@ -88,3 +91,23 @@ def createFolder(directory):
 # Example
 createFolder('./data/')
 # Creates a folder in the current directory called data
+
+
+df = pd.read_csv(resource_path("data/Posicao_orientacao.csv"), sep='=', engine='python', on_bad_lines='skip')
+
+# observer = Antena Natal
+observer = ephem.Observer()
+observer.lat = '- 5,836126'
+observer.lon = '- 35,207609'
+observer.date = 'float(df.iloc[8, 0])' #toDo ler nos resultados
+
+satellite = #toDo ler nos resultados
+
+satellite.compute(observer)
+
+elevation = satellite.alt*180 / ephem.pi
+
+if elevation > 15:
+    print("Há comunicação.")
+else:
+    print("Elevação muito pequena, não há comunicação.")
