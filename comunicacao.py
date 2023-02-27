@@ -24,3 +24,8 @@ elevation = math.degrees(satellite.alt)
 
 # Exibe a elevação calculada
 print("A elevação do satélite é:", elevation, "graus")
+
+elevation = []
+
+for i in range( 0 , len(elevation) ,  ): # inicio, fim, passo
+    if i >= 15
