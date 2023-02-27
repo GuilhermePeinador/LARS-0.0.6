@@ -33,7 +33,7 @@ PHI0 = 0.0
 
 "Inserir data inicial no formato apresentado %m/%d/%Y %H:%M:%S"
 
-data = 11/10/2022 18:00:00
+data = 2022/11/10 18:00:00
 Passo de Tempo = 10
 Divisoes da Terra = 20
 
