@@ -7,6 +7,8 @@ observer.lat = '- 5.836126' # Latitude da antena do INPE - Natal
 observer.lon = '-35.207609' # Longitude da antena do INPE - Natal
 observer.elevation = '56'   # Altitude da antena do INPE - Natal (METROS)
 
+
+
 # Define as coordenadas do satélite em função do tempo
 satellite_lat = '' # Ler a partir do arquivo gerado na simulação
 satellite_lon = '' # Ler a partir do arquivo gerado na simulação
@@ -27,5 +29,18 @@ print("A elevação do satélite é:", elevation, "graus")
 
 elevation = []
 
-for i in range( 0 , len(elevation) ,  ): # inicio, fim, passo
-    if i >= 15
+elevationTF = []
+
+for i in elevation:
+    if i >= 15:
+        elevationTF.append(True)
+    else:
+        elevationTF.append(False)
+
+elevationTF.count(True)
+
+#for i in range( 0 , len(elevation) ,  ): # inicio, fim, passo
+
+
+
+
