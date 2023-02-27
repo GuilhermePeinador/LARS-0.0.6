@@ -94,20 +94,3 @@ createFolder('./data/')
 
 
 df = pd.read_csv(resource_path("data/Posicao_orientacao.csv"), sep='=', engine='python', on_bad_lines='skip')
-
-# observer = Antena Natal
-observer = ephem.Observer()
-observer.lat = '- 5,836126'
-observer.lon = '- 35,207609'
-observer.date = 'float(df.iloc[8, 0])' #toDo ler nos resultados
-
-satellite = #toDo ler nos resultados
-
-satellite.compute(observer)
-
-elevation = satellite.alt*180 / ephem.pi
-
-if elevation > 15:
-    print("Há comunicação.")
-else:
-    print("Elevação muito pequena, não há comunicação.")
