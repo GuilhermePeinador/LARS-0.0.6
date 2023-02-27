@@ -1,5 +1,6 @@
 import ephem
 import math
+import pandas as pd
 
 # Define a localização do observador
 observer = ephem.Observer()
@@ -7,7 +8,13 @@ observer.lat = '- 5.836126' # Latitude da antena do INPE - Natal
 observer.lon = '-35.207609' # Longitude da antena do INPE - Natal
 observer.elevation = '56'   # Altitude da antena do INPE - Natal (METROS)
 
+df = pd.read_csv(resource_path("data/Posicao_orientacao.csv"), sep='=', engine='python', on_bad_lines='skip')
 
+clatitude = df['7']
+clongitude = df['8']
+
+longitude = clongitude.to_numpy()
+latitude = clatitude.to_numpy()
 
 # Define as coordenadas do satélite em função do tempo
 satellite_lat = '' # Ler a partir do arquivo gerado na simulação
