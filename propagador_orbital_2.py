@@ -236,7 +236,7 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
 
 if __name__ == '__main__':
     from Propagador_Orbital import propagador_orbital
-    from Calor_Incidente import calor_incidente
+    #from Calor_Incidente import calor_incidente
     from Periodo_Orbital import periodo_orbital
     from datetime import datetime
     import numpy as np
@@ -245,5 +245,5 @@ if __name__ == '__main__':
     import os, sys
     input_string = ' 11/10/2022 18:00:00'
     data = datetime.strptime(input_string, " %m/%d/%Y %H:%M:%S")
-    propagador_orbital2(data, 6800.0, 0.002, 0.0, 0.0, 0.0, 52, 5, 100, 3.0, 0.1, 0.1, 0.2) #(data, semi_eixo, excentricidade, Raan, argumento_perigeu, anomalia_verdadeira,
-                                                # inclinacao, num_orbitas, delt, massa, largura, comprimento, altura)
+    propagador_orbital2(data, 6800.0, 0.002, 0.0, 0.0, 0.0, 52, 1, 100, 3.0, 0.1, 0.1, 0.2)
+    #(data, semi_eixo, excentricidade, Raan, argumento_perigeu, anomalia_verdadeira,inclinacao, num_orbitas, delt, massa, largura, comprimento, altura)
