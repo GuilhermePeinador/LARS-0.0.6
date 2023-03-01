@@ -122,7 +122,8 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     solution = []
     time_simu = []
     cont = 0
-    while SMA > 6400:
+    #while SMA > 6400  simula até a reentrada
+    while cont < T:
         qi = [h0, ecc0, true_anomaly0, Raan0, inc0, arg_per0]
         altitude = rp0 - R_terra
         xp = (h0 ** 2 / mu) * (1 / (1 + ecc0 * np.cos(true_anomaly0))) * np.cos(true_anomaly0)

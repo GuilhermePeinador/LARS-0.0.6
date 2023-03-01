@@ -8,7 +8,7 @@ observer.lat = '- 5.836126' # Latitude da antena do INPE - Natal
 observer.lon = '-35.207609' # Longitude da antena do INPE - Natal
 observer.elevation = '56'   # Altitude da antena do INPE - Natal (METROS)
 
-df = pd.read_csv(resource_path("data/Posicao_orientacao.csv"), sep='=', engine='python', on_bad_lines='skip')
+df = pd.read_csv(resource_path("data/dados_ECI"), sep='=', engine='python', on_bad_lines='skip')
 
 clatitude = df['7']
 clongitude = df['8']
