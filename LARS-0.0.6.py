@@ -4,7 +4,7 @@
     Orbital Mechanics Division
 
     Título do Algoritmo = Codigo principal de propagacao orbital
-    Autor= Rodrigo S. Cardozo e Guilherme P. Gomes
+    Autor= Rodrigo S. Cardozo
     Versão= 0.0.1
     Data= 21/02/23
 
