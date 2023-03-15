@@ -10,7 +10,6 @@
 
 """
 import matplotlib.pyplot as plt
-
 import ephem
 import math
 

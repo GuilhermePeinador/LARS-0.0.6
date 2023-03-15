@@ -29,8 +29,9 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     & altura = altura do cubesat ex: 0.2
 
     """
-    print("Propagando o movimento")
+#    print("Propagando o movimento")
     import numpy as np
+    import math
     import pandas as pd
     from scipy.integrate import odeint
     from datetime import datetime
@@ -82,6 +83,9 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
         rho = densidade[0][5] * 1000
         return rho
 
+    def calcula_elevacao(latitude,longitude,data):
+        # Escrever aqui a função de calculo de elevacao
+        return []
     # condicoes iniciais
 
     SMA = float(semi_eixo)  # semi eixo maior
@@ -104,8 +108,6 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     Posi_ini = int(rp0)*[x_rot, y_rot, z_rot]
     lamb_e = (np.arctan2(Posi_ini[1], Posi_ini[0]))
 
-    lat = []
-    long = []
     # comeco da integracao
 
     DELTAT = delt
@@ -113,17 +115,23 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     J2 = 1.08263e-3
     R_terra = 6371
     Time_step = delt
-    passo = 1000
+    passo = 10
     ini_date = data
     n = num_orbitas
     T = T_orb*n
     t = np.linspace(0, Time_step, passo)
-    data = []
-    solution = []
-    time_simu = []
+    N = math.trunc(T/delt)
+    print("tamaho vetor ",N)
+    lat = np.zeros(N).tolist()
+    long = np.zeros(N).tolist()
+    data = np.zeros(N).tolist()
+    elev = np.zeros(N).tolist()
+    solution = np.zeros(N).tolist()
+    time_simu = np.zeros(N).tolist()
     cont = 0
-    #while SMA > 6400  simula até a reentrada
-    while cont < T:
+    #while SMA > 6400:
+    #while cont < T:
+    for i in range(N):
         qi = [h0, ecc0, true_anomaly0, Raan0, inc0, arg_per0]
         altitude = rp0 - R_terra
         xp = (h0 ** 2 / mu) * (1 / (1 + ecc0 * np.cos(true_anomaly0))) * np.cos(true_anomaly0)
@@ -160,11 +168,13 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
 
         r = np.array([X_ECEF, Y_ECEF, Z_ECEF])
 
-        latitude = np.degrees((np.arctan2(r[2], np.sqrt(r[0] ** 2 + r[1] ** 2))))
+        latitude  = np.degrees((np.arctan2(r[2], np.sqrt(r[0] ** 2 + r[1] ** 2))))
         longitude = np.degrees((np.arctan2(r[1], r[0])))
 
         '''lat.append(latitude)
         long.append(longitude)'''
+        lat[i] = latitude
+        long[i] = longitude
 
         Rho = rho(ini_date, altitude, latitude, longitude)
         velocidade = (mu/h0)*np.sqrt(np.sin(true_anomaly0)**2 + (ecc0 + np.cos(true_anomaly0))**2)*1000
@@ -175,9 +185,11 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
         comprimento = comprimento
         altura = altura
         sol = odeint(propagador, qi, t, args=(Rho, velocidade, massa, largura, comprimento, altura, CD, posicao, Area_transversal))
-        solution.append(sol[passo - 1])
+        #solution.append(sol[passo - 1])
+        solution[i]=sol[passo - 1]
         h0 = sol[passo-1][0]
         SMA = (h0**2/mu)*(1/(1-ecc0*np.cos(true_anomaly0)))
+        #print(SMA)
         ecc0 = sol[passo-1][1]
         true_anomaly0 = sol[passo-1][2]
         Raan0 = sol[passo-1][3]
@@ -185,10 +197,14 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
         arg_per0 = sol[passo-1][5]
         posicao = (h0**2/mu)*(1/(1-ecc0*np.cos(true_anomaly0)))
         cont = cont + Time_step
-        time_simu.append(cont)
+        #time_simu.append(cont)
+        time_simu[i] = cont
         final_date = timedelta(seconds=Time_step)
         ini_date = ini_date + final_date
-        data.append(ini_date)
+        #data.append(ini_date)
+        data[i] = ini_date
+
+        elev[i] = calcula_elevacao(latitude,longitude,ini_date)
 
     solucao = pd.DataFrame(solution, columns=['h', 'ecc', 'anomalia_verdadeira', 'raan', 'inc', 'arg_per'])
     solucao['X_perifocal'] = (solucao['h']**2/mu)*(1/(1 + solucao['ecc']*np.cos(solucao['anomalia_verdadeira'])))*np.cos(solucao['anomalia_verdadeira'])
@@ -196,6 +212,7 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     solucao['Z_perifocal'] = 0
     solucao['distancia'] = np.sqrt(solucao['X_perifocal']**2 + solucao['Y_perifocal']**2)
 
+    print('Tamanho Data ',len(data))
     df = pd.DataFrame()
 
     df['X_ECI'] = ((np.cos(solucao['raan'])*np.cos(solucao['arg_per']) - np.sin(solucao['raan'])*np.sin(solucao['arg_per'])*np.cos(solucao['inc']))*solucao['X_perifocal']
@@ -233,7 +250,7 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     '''import os.path
     solucao.to_csv(os.path.join('./data/', 'solver.csv'), sep=',')'''
 
-    return "END"
+    return df, data, long, lat 
 
 if __name__ == '__main__':
     from Propagador_Orbital import propagador_orbital
@@ -242,9 +259,22 @@ if __name__ == '__main__':
     from datetime import datetime
     import numpy as np
     import pandas as pd
-    import Plots
     import os, sys
+    import time
     input_string = ' 11/10/2022 18:00:00'
     data = datetime.strptime(input_string, " %m/%d/%Y %H:%M:%S")
-    propagador_orbital2(data, 6800.0, 0.002, 0.0, 0.0, 0.0, 52, 1, 100, 3.0, 0.1, 0.1, 0.2)
-    #(data, semi_eixo, excentricidade, Raan, argumento_perigeu, anomalia_verdadeira,inclinacao, num_orbitas, delt, massa, largura, comprimento, altura)
+
+    import argparse
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--orbitas", default=10,type=int)
+    
+    orbitas = parser.parse_args().orbitas
+    
+    t0 = time.time()
+
+    df, data, long, lat  = propagador_orbital2(data=data, semi_eixo=6800.0, excentricidade = 0.002, Raan = 0.0, argumento_perigeu = 0.0,
+            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 10, massa = 3.0, 
+            largura = 0.1, comprimento = 0.1, altura = 0.2)
+
+    print("orbitas " ,orbitas ,"tempo ",time.time()-t0)
