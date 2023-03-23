@@ -121,7 +121,7 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     T = T_orb*n
     t = np.linspace(0, Time_step, passo)
     N = math.trunc(T/delt)
-    print("tamaho vetor ",N)
+    print("tamanho vetor ",N)
     lat = np.zeros(N).tolist()
     long = np.zeros(N).tolist()
     data = np.zeros(N).tolist()
@@ -274,7 +274,8 @@ if __name__ == '__main__':
     t0 = time.time()
 
     df, data, long, lat  = propagador_orbital2(data=data, semi_eixo=6800.0, excentricidade = 0.002, Raan = 0.0, argumento_perigeu = 0.0,
-            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 10, massa = 3.0, 
+            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 0.1, massa = 3.0,
             largura = 0.1, comprimento = 0.1, altura = 0.2)
 
     print("orbitas " ,orbitas ,"tempo ",time.time()-t0)
+    print(lat[-1], long[-1])
