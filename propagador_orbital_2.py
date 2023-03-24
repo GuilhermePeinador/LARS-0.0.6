@@ -274,7 +274,7 @@ if __name__ == '__main__':
     t0 = time.time()
 
     df, data, long, lat  = propagador_orbital2(data=data, semi_eixo=6800.0, excentricidade = 0.002, Raan = 0.0, argumento_perigeu = 0.0,
-            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 0.1, massa = 3.0,
+            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 0.01, massa = 3.0,
             largura = 0.1, comprimento = 0.1, altura = 0.2)
 
     print("orbitas " ,orbitas ,"tempo ",time.time()-t0)
