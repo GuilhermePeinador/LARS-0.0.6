@@ -38,14 +38,14 @@ fig, ax = plt.subplots()
 
 
 plt.scatter(npontos, Latitude, color='red')
-plt.xlim(550,560000)
+plt.xlim(550,5600000)
 plt.xscale('log')
 plt.ylim(16,24)
 plt.axhline(22.7081, linestyle = 'dashed') # assíntota horizontal
 plt.show()
 
 plt.scatter(npontos, Longitude, color='blue')
-plt.xlim(550,560000)
+plt.xlim(550,5600000)
 plt.ylim(150,156)
 plt.axhline(155.283, linestyle = 'dashed')
 plt.xscale('log')
