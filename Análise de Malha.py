@@ -102,7 +102,7 @@ erro8 = round((abs(Longitudes30[0]-Longitudesref30[0])/Longitudesref30[0]) *100 
 print("(I = 30 e RAAN = 0) Erro entre Longitudes:", erro8)
 #Erro longitude I=30 / RAAN=90
 erro9 = round((abs(Longitudes30[1]-Longitudesref30[1])/Longitudesref30[1]) *100 , 2)
-print("(I = 30 e RAAN = 90) Erro entre Longitudes:", erro9)
+print("(I = 30 e RAAN = 90) Erro entre Longitudes:", abs(erro9))
 #Erro longitude I=30 / RAAN=180
 erro10 = round((abs(Longitudes30[2]-Longitudesref30[2])/Longitudesref30[2]) *100 , 2)
 print("(I = 30 e RAAN = 180) Erro entre Longitudes:", erro10)
@@ -115,7 +115,7 @@ erro12 = round((abs(Longitudes98[0]-Longitudesref98[0])/Longitudesref98[0]) *100
 print("(I = 98 e RAAN = 0) Erro entre Longitudes:", erro12)
 #Erro longitude I=98 / RAAN=90
 erro13 = round((abs(Longitudes98[1]-Longitudesref98[1])/Longitudesref98[1]) *100 , 2)
-print("(I = 98 e RAAN = 90) Erro entre Longitudes:", erro13)
+print("(I = 98 e RAAN = 90) Erro entre Longitudes:", abs(erro13))
 #Erro longitude I=98 / RAAN=180
 erro14 = round((abs(Longitudes98[2]-Longitudesref98[2])/Longitudesref98[2]) *100 , 2)
 print("(I = 98 e RAAN = 180) Erro entre Longitudes:", erro14)
