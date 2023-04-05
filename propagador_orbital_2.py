@@ -131,7 +131,8 @@ def propagador_orbital2(data, semi_eixo, excentricidade, Raan, argumento_perigeu
     cont = 0
     #while SMA > 6400:
     #while cont < T:
-    for i in range(N):
+    from tqdm import tqdm
+    for i in tqdm (range(N)):
         qi = [h0, ecc0, true_anomaly0, Raan0, inc0, arg_per0]
         altitude = rp0 - R_terra
         xp = (h0 ** 2 / mu) * (1 / (1 + ecc0 * np.cos(true_anomaly0))) * np.cos(true_anomaly0)
@@ -273,9 +274,10 @@ if __name__ == '__main__':
     
     t0 = time.time()
 
-    df, data, long, lat  = propagador_orbital2(data=data, semi_eixo=6800.0, excentricidade = 0.002, Raan = 0.0, argumento_perigeu = 0.0,
-            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 0.01, massa = 3.0,
+    df, data, long, lat  = propagador_orbital2(data=data, semi_eixo=6800.0, excentricidade = 0.002, Raan = 90.0, argumento_perigeu = 0.0,
+            anomalia_verdadeira = 0.0, inclinacao = 52, num_orbitas = orbitas, delt = 1, massa = 3.0,
             largura = 0.1, comprimento = 0.1, altura = 0.2)
 
     print("orbitas " ,orbitas ,"tempo ",time.time()-t0)
     print(lat[-1], long[-1])
+0
